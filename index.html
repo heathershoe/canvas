@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+			/* height: 80vh;
+			width: 80vw; */
+	}
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "300" height = "300"  ></canvas>
+    <input type = "color" id = "picker"/>
+
+
+		<script>
+
+
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+
+
+		var wdth = window.innerWidth;
+		c.width = wdth * .8;
+		var hght = window.innerHeight;
+		c.height = hght * .8;
+
+		function draw(x, y){
+			ctx.beginPath();
+			ctx.arc(x,y,10,0,2*Math.PI);
+			// x, y, radius, 0 start angle, end angle
+			ctx.fill();
+			ctx.fillStyle=penclr;
+		}
+
+		myCanvas.addEventListener(
+		  'mousemove', function (e){
+		    // console.log(e)
+				let x = e.clientX-5;
+				let y = e.clientY-5;
+				if (penstat == true){
+					draw(x,y)
+				}
+
+		  }
+		)
+		// note: the x/y properties, will default to the top left corner of the drawing bounding box. Draw a circle around the x/y using the radius of the circle
+
+
+		var penstat = true;
+		var penclr = picker.value;
+
+
+		window.addEventListener(
+		  'keydown', function (e){
+		    console.log(e)
+				if (e.keyCode === 38){
+					penstat = false;
+				}
+				if (e.keyCode == 40){
+					penstat = true;
+				}
+				if (e.keyCode == 66){
+					penclr = "blue"
+				}
+				if (e.keyCode == 71){
+					penclr = "green"
+				}
+				if (e.keyCode == 89){
+					penclr = "yellow"
+				}
+				if (e.keyCode == 82){
+					penclr = "red"
+				}
+
+				if (e.keyCode == 32){
+					ctx.clearRect(0, 0, wdth * .8, hght * .8)
+				}
+			}
+		)
+
+document.getElementById("picker").addEventListener("change", function (e){
+	penclr=picker.value;
+})
+
+
+
+		</script>
+</body>
+</html>
